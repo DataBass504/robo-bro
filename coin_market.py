@@ -43,6 +43,8 @@ class CoinMarket:
             else:
                 hour_trend = ' :small_red_triangle_down:'
                 isPositivePercent = False
+            If float(data['perfect_change_1h']) >= 20:
+                hour_trend = ' :feelsgood:'
 
             formatted_data += ':mag_right: `{}. {} ({}) `{}\n'.format(data['rank'], data['name'], data['symbol'], hour_trend)
             formatted_data += '```Price (USD): ${:,}\n'.format(float(data['price_usd']))
