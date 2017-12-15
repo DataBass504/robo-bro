@@ -1,5 +1,5 @@
 {
-    "token": "Mzg3MTc1MjY4MzY1ODkzNjMy.DQao0A.Bh6a50JFkinl4ssLuYLn6Xt9zg8",
+    "token": "Enter Discord Token",
     "live_channel": "Enter the channel ID to post live updates",
     "live_update_interval": "60",
     "live_check_currency": [
