@@ -1,9 +1,11 @@
 from coinmarketcap import Market
 from operator import itemgetter
+import datetime
 
 
 class CoinMarketException(Exception):
     """Exception class for CoinMarket"""
+
 
 class CoinMarket:
     """
@@ -12,6 +14,7 @@ class CoinMarket:
     def __init__(self):
         """
         Initiates CoinMarket
+
         @param bot - discord bot object
         """
         self.market = Market()
@@ -43,10 +46,9 @@ class CoinMarket:
             else:
                 hour_trend = ' :small_red_triangle_down:'
                 isPositivePercent = False
-            If float(data['perfect_change_1h']) >= 20:
-                hour_trend = ' :feelsgood:'
 
-            formatted_data += ':mag_right: `{}. {} ({}) `{}\n'.format(data['rank'], data['name'], data['symbol'], hour_trend)
+
+            formatted_data += ':mag_right: ` {}. {} ({}) `{} \n'.format(data['rank'], data['name'], data['symbol'], hour_trend)
             formatted_data += '```Price (USD): ${:,}\n'.format(float(data['price_usd']))
             formatted_data += 'Price (BTC): ฿{:.8f}\n'.format(float (data['price_btc']))
 
@@ -55,12 +57,12 @@ class CoinMarket:
             else:
                 formatted_data += 'Market Cap (USD): ${:,}\n'.format(float(data['market_cap_usd']))
             if (data['available_supply'] is None):
-                formatted_data += 'Available Supply: Unknown\n'
+                formatted_data += 'Available Supply: Unknown```\n'
             else:
+
                 formatted_data += 'Available Supply: {:,}\n'.format(float(data['available_supply']))
-            formatted_data += 'Percent Change (1H): {}%\n'.format(data['percent_change_1h'])
-            formatted_data += 'Percent Change (24H): {}%\n'.format(data['percent_change_24h'])
-            formatted_data += 'Percent Change (7D): {}%```\n'.format(data['percent_change_7d'])
+                formatted_data += '(1H): {}% (24H): {}% (7D): {}%\n'.format(data['percent_change_1h'], data['percent_change_24h'], data['percent_change_7d'])
+                formatted_data += 'Updated: {}```\n' .format(float(data['last_updated']))
 
             return formatted_data, isPositivePercent
         except Exception as e:
@@ -78,7 +80,7 @@ class CoinMarket:
             data = self._fetch_currency_data(currency, fiat)[0]
             formatted_data, isPositivePercent = self._format_currency_data(data, currency, fiat)
         except Exception as e:
-            formatted_data = "Unable to find the currency specified: " + currency
+            formatted_data = ":octagonal_sign:  ` Unable to find the currency specified: " + currency + " `"
         return formatted_data, isPositivePercent
 
     def _fetch_coinmarket_stats(self):
@@ -101,8 +103,8 @@ class CoinMarket:
                 formatted_stats += "Total Market Cap (USD): Unknown"
             else:
                 formatted_stats += "```Total Market Cap (USD): ${:,}\n".format(float(stats['total_market_cap_usd']))
-
-            formatted_stats += "Bitcoin Percentage of Market: {:,}%\n".format(stats['bitcoin_percentage_of_market_cap'])
+            formatted_stats += "Total 24h Volume (USD): ${:,}\n".format(stats['total_24h_volume_usd'])
+            formatted_stats += "Bitcoin Dominance: {:,}%\n".format(stats['bitcoin_percentage_of_market_cap'])
             formatted_stats += "Active Markets: {:,}\n".format(stats['active_markets'])
             formatted_stats += "Active Currencies: {:,}\n".format(stats['active_currencies'])
             formatted_stats += "Active Assets: {:,}```\n".format(stats['active_assets'])

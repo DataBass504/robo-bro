@@ -114,3 +114,8 @@ class CoinMarketCommand:
                             config_data['live_update_interval'],
                             client,
                             message)
+ve_check_currency'],
+                            config_data['live_channel'],
+                            config_data['live_update_interval'],
+                            client,
+                            message)
