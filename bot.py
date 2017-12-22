@@ -1,6 +1,6 @@
 import discord
 import json
-from command_handler import CmdHandler
+from robobro.command_handler import CmdHandler
 
 # Wrapping this at some point
 client = discord.Client()
@@ -22,7 +22,7 @@ class CoinMarketBot:
 
     @client.event
     async def on_ready():
-        print('CoinMarketDiscordBot is online.')
+        print('RoboBro is online.')
 
     @client.event
     async def on_message(message):

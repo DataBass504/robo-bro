@@ -1,4 +1,4 @@
-from modules.coin_market import CoinMarket
+from .coin_market import CoinMarket
 import asyncio
 import discord
 
@@ -110,11 +110,6 @@ class CoinMarketCommand:
             await self.stats(client, message)
         elif message.content.startswith("$live"):
             await self.live(config_data['live_check_currency'],
-                            config_data['live_channel'],
-                            config_data['live_update_interval'],
-                            client,
-                            message)
-ve_check_currency'],
                             config_data['live_channel'],
                             config_data['live_update_interval'],
                             client,
