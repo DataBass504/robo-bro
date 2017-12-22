@@ -66,7 +66,7 @@ class CoinMarketCommand:
                            colour=0x008000)
         await client.send_message(message.channel, embed=em)
 
-    async def live(self, currency_list, live_channel, timer, client, message):
+    #async def live(self, currency_list, live_channel, timer, client, message):
         """
         Displays live updates of coin stats in n-second intervals
 
@@ -76,29 +76,29 @@ class CoinMarketCommand:
         @param client - bot client
         @param message - command received
         """
-        if not self.live_on:
-            self.live_on = True
-            param = message.content.split()
-            while True:
-                try:
-                    await client.purge_from(message.channel, limit=100)
-                except:
-                    pass
-                if param == 2:
-                    data = await self.coin_market.get_live_data(currency_list,
-                                                                param[1])
-                else:
-                    data = await self.coin_market.get_live_data(currency_list)
-                em = discord.Embed(title="Live Currency Update",
-                                   description=data,
-                                   colour=0xFFD700)
-                await client.send_message(message.channel, embed=em)
-                await asyncio.sleep(float(timer))
+        #if not self.live_on:
+        #    self.live_on = True
+        #    param = message.content.split()
+        #    while True:
+        #        try:
+        #            await client.purge_from(message.channel, limit=100)
+        #        except:
+        #            pass
+        #        if param == 2:
+        #            data = await self.coin_market.get_live_data(currency_list,
+        #                                                        param[1])
+        #        else:
+        #            data = await self.coin_market.get_live_data(currency_list)
+        #        em = discord.Embed(title="Live Currency Update",
+        #                           description=data,
+        #                           colour=0xFFD700)
+        #        await client.send_message(message.channel, embed=em)
+        #        await asyncio.sleep(float(timer))
 
     async def get_help(self, client, message):
-        data = "$search currency\n"
-        data += "$live\n"
-        data += "$stats"
+        data = "```$search currency\n"
+        #data += "$live\n"
+        data += "$stats```"
         em = discord.Embed(title="Commands",
                            description=data,
                            colour=0xFFD700)
@@ -116,11 +116,13 @@ class CoinMarketCommand:
             await self.search(client, message)
         elif message.content.startswith("$stats"):
             await self.stats(client, message)
-        elif message.content.startswith("$live"):
-            await self.live(config_data['live_check_currency'],
-                            config_data['live_channel'],
-                            config_data['live_update_interval'],
-                            client,
-                            message)
+
+        #elif message.content.startswith("$live"):
+        #    await self.live(config_data['live_check_currency'],
+        #                    config_data['live_channel'],
+        #                    config_data['live_update_interval'],
+        #                    client,
+        #                    message)
+
         elif message.content.startswith("$help"):
             await self.get_help(client, message)
