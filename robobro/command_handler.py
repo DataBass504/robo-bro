@@ -1,6 +1,7 @@
 from .coin_market import CoinMarket
 import asyncio
 import discord
+import datetime
 
 
 class CmdHandler:
@@ -43,6 +44,11 @@ class CoinMarketCommand:
             await client.send_message(message.channel,
                                       "Please enter a currency to search. A "
                                       "particular fiat is optional.")
+        '''index = data.rfind(":")
+        date = datetime.datetime.fromtimestamp(float(data[index+2:-4])).strftime("%H:%M:%S %p")
+        print (date)
+        data = data[:index] + ": " + date + "```"'''
+
         if isPositivePercent:
             em = discord.Embed(title="Search results",
                                description=data,
@@ -95,6 +101,16 @@ class CoinMarketCommand:
                 await client.send_message(message.channel, embed=em)
                 await asyncio.sleep(float(timer))
 
+    async def get_help(self, client, message):
+        data = "$search currency\n"
+        data += "$live\n"
+        data += "$stats"
+        em = discord.Embed(title="Commands",
+                           description=data,
+                           colour=0xFFD700)
+        await client.send_message(message.channel, embed=em)
+
+
     async def process_command(self, config_data, client, message):
         """
         Processes commands to use
@@ -112,3 +128,5 @@ class CoinMarketCommand:
                             config_data['live_update_interval'],
                             client,
                             message)
+        elif message.content.startswith("$help"):
+            await self.get_help(client, message)
