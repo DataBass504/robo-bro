@@ -6,6 +6,7 @@ from robobro.command_handler import CmdHandler
 client = discord.Client()
 config_data = ''
 with open('config.json') as config:
+# with open('config_test.json') as config:
     config_data = json.load(config)
 handle = CmdHandler(config_data)
 

@@ -81,8 +81,7 @@ class CoinMarketCommand:
             param = message.content.split()
             while True:
                 try:
-                    await client.purge_from(client.get_channel(live_channel),
-                                            limit=100)
+                    await client.purge_from(message.channel, limit=100)
                 except:
                     pass
                 if param == 2:
@@ -93,8 +92,7 @@ class CoinMarketCommand:
                 em = discord.Embed(title="Live Currency Update",
                                    description=data,
                                    colour=0xFFD700)
-                await client.send_message(client.get_channel(live_channel),
-                                          embed=em)
+                await client.send_message(message.channel, embed=em)
                 await asyncio.sleep(float(timer))
 
     async def process_command(self, config_data, client, message):
