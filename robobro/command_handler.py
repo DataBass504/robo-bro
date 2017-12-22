@@ -1,7 +1,6 @@
 from .coin_market import CoinMarket
 import asyncio
 import discord
-import datetime
 
 
 class CmdHandler:
@@ -44,11 +43,6 @@ class CoinMarketCommand:
             await client.send_message(message.channel,
                                       "Please enter a currency to search. A "
                                       "particular fiat is optional.")
-        '''index = data.rfind(":")
-        date = datetime.datetime.fromtimestamp(float(data[index+2:-4])).strftime("%H:%M:%S %p")
-        print (date)
-        data = data[:index] + ": " + date + "```"'''
-
         if isPositivePercent:
             em = discord.Embed(title="Search results",
                                description=data,
