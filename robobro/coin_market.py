@@ -1,6 +1,7 @@
 from coinmarketcap import Market
 from operator import itemgetter
 import datetime
+import time
 
 
 class CoinMarketException(Exception):
@@ -62,7 +63,11 @@ class CoinMarket:
 
                 formatted_data += 'Available Supply: {:,}\n'.format(float(data['available_supply']))
                 formatted_data += '(1H): {}% (24H): {}% (7D): {}%\n'.format(data['percent_change_1h'], data['percent_change_24h'], data['percent_change_7d'])
-                formatted_data += 'Updated: {}```\n' .format(float(data['last_updated']))
+                last_update = time.time() - float(data['last_updated'])
+                last_update = time.strftime("%-m minutes %S seconds", time.gmtime(last_update))
+                if last_update[0] == "1":
+                    last_update = last_update.replace("minutes", "minute")
+                formatted_data += 'Updated: {} ago```\n' .format(last_update)
 
             return formatted_data, isPositivePercent
         except Exception as e:

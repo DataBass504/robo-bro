@@ -1,4 +1,4 @@
-from modules.coin_market import CoinMarket
+from .coin_market import CoinMarket
 import asyncio
 import discord
 
@@ -81,8 +81,7 @@ class CoinMarketCommand:
             param = message.content.split()
             while True:
                 try:
-                    await client.purge_from(client.get_channel(live_channel),
-                                            limit=100)
+                    await client.purge_from(message.channel, limit=100)
                 except:
                     pass
                 if param == 2:
@@ -93,9 +92,18 @@ class CoinMarketCommand:
                 em = discord.Embed(title="Live Currency Update",
                                    description=data,
                                    colour=0xFFD700)
-                await client.send_message(client.get_channel(live_channel),
-                                          embed=em)
+                await client.send_message(message.channel, embed=em)
                 await asyncio.sleep(float(timer))
+
+    async def get_help(self, client, message):
+        data = "$search currency\n"
+        data += "$live\n"
+        data += "$stats"
+        em = discord.Embed(title="Commands",
+                           description=data,
+                           colour=0xFFD700)
+        await client.send_message(message.channel, embed=em)
+
 
     async def process_command(self, config_data, client, message):
         """
@@ -114,8 +122,5 @@ class CoinMarketCommand:
                             config_data['live_update_interval'],
                             client,
                             message)
-ve_check_currency'],
-                            config_data['live_channel'],
-                            config_data['live_update_interval'],
-                            client,
-                            message)
+        elif message.content.startswith("$help"):
+            await self.get_help(client, message)
