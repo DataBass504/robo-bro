@@ -41,8 +41,8 @@ class CoinMarketCommand:
             data, isPositivePercent = await self.coin_market.get_currency(param[1])
         else:
             await client.send_message(message.channel,
-                                      "Please enter a currency to search. A "
-                                      "particular fiat is optional.")
+                                      "```Please enter a currency to search. A "
+                                      "particular fiat is optional.```")
         if isPositivePercent:
             em = discord.Embed(title="Search results",
                                description=data,
