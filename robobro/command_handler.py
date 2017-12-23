@@ -98,7 +98,7 @@ class CoinMarketCommand:
     async def get_help(self, client, message):
         data = "```$search currency\n"
         #data += "$live\n"
-        data += "$stats```"
+        data += "$mcap```"
         em = discord.Embed(title="Commands",
                            description=data,
                            colour=0xFFD700)
@@ -112,9 +112,9 @@ class CoinMarketCommand:
         @param client - bot client
         @param message - command received
         """
-        if message.content.startswith("$search"):
+        if message.content.startswith("$s"):
             await self.search(client, message)
-        elif message.content.startswith("$stats"):
+        elif message.content.startswith("$mcap"):
             await self.stats(client, message)
 
         #elif message.content.startswith("$live"):
