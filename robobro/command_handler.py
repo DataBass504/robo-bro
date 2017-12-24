@@ -142,22 +142,24 @@ class CoinMarketCommand:
             await client.send_message(message.channel, embed=em)
 
     async def check_symbol_value(self, client, message):
-        pass
-    #     """
-    #     Check which name the symbol is mapped to
-    #
-    #     @param client - bot client
-    #     @param message - command received
-    #     """
-    #     param = message.content.split()
-    #     symbols = param[1:]
-    #     data = ""
-    #     for symbol in symbols:
-    #         data += "{} -> {}\n".format(symbol, self.coin_symbol[symbol])
-    #     em = discord.Embed(title="Symbols and Values",
-    #                        description=data,
-    #                        colour=0xFFD700)
-    #     await client.send_message(message.channel, embed=em)
+        """
+        Check which name the symbol is mapped to
+
+        @param client - bot client
+        @param message - command received
+        """
+        param = message.content.split()
+        symbols = param[1:]
+        data = ""
+        for symbol in symbols:
+            if symbol in self.coin_symbol:
+                data += "{} -> {}\n".format(symbol, self.coin_symbol[symbol])
+            else:
+                data += "{} -> symbol not defined\n".format(symbol)
+        em = discord.Embed(title="Symbols and Values",
+                           description=data,
+                           colour=0xFFD700)
+        await client.send_message(message.channel, embed=em)
 
     async def process_command(self, config_data, client, message):
         """
