@@ -109,7 +109,9 @@ class CoinMarketCommand:
 
         data = "```$search currency\n"
         #data += "$live\n"
-        data += "$mcap```"
+        data += "$mcap\n"
+        data += "$update symbol full-name\n"
+        data += "$symbol btc ltc etc```"
         em = discord.Embed(title="Commands",
                            description=data,
                            colour=0xFFD700)
