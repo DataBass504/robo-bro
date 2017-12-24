@@ -100,6 +100,13 @@ class CoinMarketCommand:
         #        await asyncio.sleep(float(timer))
 
     async def get_help(self, client, message):
+        """
+        Displays helpful commands
+
+        @param client - bot client
+        @param message - command received
+        """
+
         data = "```$search currency\n"
         #data += "$live\n"
         data += "$mcap```"
@@ -108,6 +115,49 @@ class CoinMarketCommand:
                            colour=0xFFD700)
         await client.send_message(message.channel, embed=em)
 
+    async def update_symbol(self, client, message):
+        """
+        Map a symbol to a full currency name
+
+        @param client - bot client
+        @param message - command received
+        """
+        import json
+        param = message.content.split()
+        if len(param) != 3:
+            await client.send_message(message.channel,
+                                     "```Please enter a symbol and a currency "
+                                     "to map it to```")
+        else:
+            symbol = param[1]
+            full_name = param[2]
+            self.coin_symbol[symbol] = full_name
+            data = "Updated {} -> {}".format(symbol, full_name)
+            # update cryptocurrencies.json with new value
+            with open("cryptocurrencies.json", "w") as f:
+                json.dump(self.coin_symbol, f, indent=2, sort_keys=True)
+            em = discord.Embed(title="Update",
+                               description=data,
+                               colour=0xFFD700)
+            await client.send_message(message.channel, embed=em)
+
+    async def check_symbol_value(self, client, message):
+        pass
+    #     """
+    #     Check which name the symbol is mapped to
+    #
+    #     @param client - bot client
+    #     @param message - command received
+    #     """
+    #     param = message.content.split()
+    #     symbols = param[1:]
+    #     data = ""
+    #     for symbol in symbols:
+    #         data += "{} -> {}\n".format(symbol, self.coin_symbol[symbol])
+    #     em = discord.Embed(title="Symbols and Values",
+    #                        description=data,
+    #                        colour=0xFFD700)
+    #     await client.send_message(message.channel, embed=em)
 
     async def process_command(self, config_data, client, message):
         """
@@ -116,11 +166,14 @@ class CoinMarketCommand:
         @param client - bot client
         @param message - command received
         """
-        if message.content.startswith("$s"):
+        if message.content.startswith("$symbol"):
+            await self.check_symbol_value(client, message)
+        elif message.content.startswith("$s"):
             await self.search(client, message)
         elif message.content.startswith("$mcap"):
             await self.stats(client, message)
-
+        elif message.content.startswith("$update"):
+            await self.update_symbol(client, message)
         #elif message.content.startswith("$live"):
         #    await self.live(config_data['live_check_currency'],
         #                    config_data['live_channel'],
