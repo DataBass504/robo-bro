@@ -42,6 +42,7 @@ class CoinMarket:
             isPositivePercent = True
             formatted_data = ''
             hour_trend = ''
+            # img_url = 'https://files.coinmarketcap.com/static/img/coins/32x32/{}.png'.format(currency)
             if float(data['percent_change_1h']) >= 0:
                 hour_trend = ' :rocket:'
             else:
