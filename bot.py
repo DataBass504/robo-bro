@@ -5,10 +5,12 @@ from robobro.command_handler import CmdHandler
 # Wrapping this at some point
 client = discord.Client()
 config_data = ''
-with open('config.json') as config:
-# with open('config_test.json') as config:
+# with open('config.json') as config:
+with open('config_test.json') as config:
     config_data = json.load(config)
-handle = CmdHandler(config_data)
+with open('cryptocurrencies.json', 'r') as cryptocurrencies:
+    coin_symbol = json.load(cryptocurrencies)
+handle = CmdHandler(config_data, coin_symbol)
 
 
 class CoinMarketBotException(Exception):

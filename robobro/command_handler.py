@@ -7,9 +7,9 @@ class CmdHandler:
     """
     Processes commands sent from Discord
     """
-    def __init__(self, config_data):
+    def __init__(self, config_data, coin_symbol):
         self.coin_market_prefix = '$'
-        self.coin_market_cmd_handler = CoinMarketCommand()
+        self.coin_market_cmd_handler = CoinMarketCommand(coin_symbol)
         self.config_data = config_data
 
     async def process_command(self, client, message):
@@ -23,8 +23,9 @@ class CoinMarketCommand:
     """
     Handles all Coin Market Cap related commands
     """
-    def __init__(self):
+    def __init__(self, coin_symbol):
         self.coin_market = CoinMarket()
+        self.coin_symbol = coin_symbol
         self.live_on = False
 
     async def search(self, client, message):
@@ -35,6 +36,9 @@ class CoinMarketCommand:
         @param message - command received
         """
         param = message.content.split()
+        # get currency name based on symbol
+        if param[1] in self.coin_symbol:
+            param[1] = self.coin_symbol[param[1]]
         if len(param) == 3:
             data, isPositivePercent = await self.coin_market.get_currency(param[1], param[2])
         elif len(param) == 2:
