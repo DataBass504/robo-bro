@@ -1,4 +1,4 @@
-# CoinMarketDiscordBot
+# Robo-Bro
 A Discord bot that reports data from https://coinmarketcap.com/
 
 Created with the python ![CoinMarketCap API](https://github.com/mrsmn/coinmarketcap-api) wrapper.
