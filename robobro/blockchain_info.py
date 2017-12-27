@@ -19,13 +19,21 @@ class BlockchainInfo:
         try:
             isMiningBlock = True
             fomatted_data = ''
-            block_minutes = ''
+            block_minutes = time.time() - float(data['minutes_between_blocks'])
+            block_minutes = time.strftime("%-m minutes %S seconds", time.gmttime(block_minutes))
             
-            if float(data['minutes_between_blocks]) >= 0.0:
+            
+            if float(data['minutes_between_blocks']) >= 0.0:
                 block_time = ' '
-            else:
+            elseif float(data['minutes_between_blocks']) <= 0.1:
                 block_time = ' '
                 isMiningBlock = False
 
             formatted_data += '```Block #: {}\n'.format(data['n_blocks_total'])
-            formatted_data += 'Last Block: {:.2f} minutes ago```\n'.format(float(data['minutes_between_blocks']))
+            
+            If block_minutes[0] == "0.1":
+                block_minutes = block_minutes.replace("minutes", "minute")
+            formatted_data += 'Last Block: {:.2f} ago```\n'. .format(block_minutes)
+        return formatted_data, isMiningBlock
+    except Exception as e:
+        print("Failed to format data: " + e
