@@ -14,7 +14,6 @@ class BlockchainInfo:
         Formats the data fetched
 
         @param block - the current block number
-        @param fiat - desired currency (i.e. 'EUR', 'USD')
         @return - formatted currency data
         """
         try:
@@ -23,10 +22,10 @@ class BlockchainInfo:
             block_minutes = ''
             
             if float(data['minutes_between_blocks]) >= 0.0:
-                block_time = ' :rocket:'
+                block_time = ' '
             else:
-                block_time = ' :small_red_triangle_down:'
+                block_time = ' '
                 isMiningBlock = False
 
-            formatted_data += '``` {}\n'.format(data['n_blocks_total'])
+            formatted_data += '```Block #: {}\n'.format(data['n_blocks_total'])
             formatted_data += 'Last Block: {:.2f} minutes ago```\n'.format(float(data['minutes_between_blocks']))
