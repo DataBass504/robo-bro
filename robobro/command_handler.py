@@ -1,6 +1,22 @@
 from .coin_market import CoinMarket
 import asyncio
 import discord
+Import urllib
+
+class BlockchainInfo:
+    def get_eta_nextblock():
+    return urllib.request.urlopen("http://blockchain.info/q/eta").read()
+
+    def get_block_count():
+    return urllib.request.urlopen("http://blockchain.info/q/getblockcount").read()
+
+    def get_transactions_count_24hr():
+    'Get the hashrate in gigahashes.'
+    return urllib.request.urlopen("http://blockchain.info/q/24hrtransactioncount").read()
+
+    def get_unconfirmed_count():
+    'Get the hashrate in gigahashes.'
+    return urllib.request.urlopen("http://blockchain.info/q/unconfirmedcount").read()
 
 
 class CmdHandler:
@@ -162,7 +178,16 @@ class CoinMarketCommand:
                            description=data,
                            colour=0xFFD700)
         await client.send_message(message.channel, embed=em)
-
+        
+    async def block_info(self, client, message):
+        
+        data = "```Block Number: " + BlockchainInfo.get_block_count
+        data += "Next Block ETA: " + BlockchainInfo.get_eta_nextblock + "```"
+        em = discord.Embed(title="Blockchain Info",
+                           description=data,
+                           colour=0x008000)
+        await client.send_message(message.channel, embed=em)
+        
     async def process_command(self, config_data, client, message):
         """
         Processes commands to use
