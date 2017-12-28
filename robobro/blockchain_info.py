@@ -2,10 +2,23 @@ from blockchain import statistics
 from operator import itemgetter
 import datetime
 import time
+Inport urllib
 
 stats = statistics.get()
 
+def get_eta_nextblock():
+    return urllib.request.urlopen("http://blockchain.info/q/eta").read()
 
+def get_block_count():
+    return urllib.request.urlopen("http://blockchain.info/q/getblockcount").read()
+
+def get_transactions_count_24hr():
+    'Get the hashrate in gigahashes.'
+    return urllib.request.urlopen("http://blockchain.info/q/24hrtransactioncount").read()
+
+def get_unconfirmed_count():
+    'Get the hashrate in gigahashes.'
+    return urllib.request.urlopen("http://blockchain.info/q/unconfirmedcount").read()
 
 class BlockchainInfo:
     
